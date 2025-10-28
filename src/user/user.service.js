@@ -17,11 +17,11 @@ const registerUser = async ({ name, email, password }) => {
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
   const otpExpiry = addMinutes(new Date(), 5);
   const token = generateToken({ id: newUser.id });
-  await updateUserOtp(newUser.id, otp, otpExpiry);
-  await sendOtpEmail(email, otp);
+  // await updateUserOtp(newUser.id, otp, otpExpiry);
+  // await sendOtpEmail(email, otp);
 
   return {
-    message: 'User registered successfully. Please verify your OTP.',
+    message: 'User registered successfully.',
     token,
   };
 };
