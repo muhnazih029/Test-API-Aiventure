@@ -17,15 +17,15 @@ const _updatePlaceRatingAverage = async (placeId, prismaClient = prisma) => {
   const ratings = place.ratings;
   const totalRating = ratings.reduce((sum, rating) => sum + rating.rating, 0);
   const average = ratings.length > 0 ? totalRating / ratings.length : 0;
-  console.log(
-    `[SERVICE] Updating place ID ${placeId} average rating to ${average.toFixed(
-      2
-    )}`
-  );
-  console.log(
-    `[SERVICE] Total ratings: ${ratings.length}, Total score: ${totalRating}`
-  );
-  console.log(`[SERVICE] ratings array:`, ratings);
+  // console.log(
+  //   `[SERVICE] Updating place ID ${placeId} average rating to ${average.toFixed(
+  //     2
+  //   )}`
+  // );
+  // console.log(
+  //   `[SERVICE] Total ratings: ${ratings.length}, Total score: ${totalRating}`
+  // );
+  // console.log(`[SERVICE] ratings array:`, ratings);
 
   await prismaClient.places.update({
     where: { id: parseInt(placeId, 10) },

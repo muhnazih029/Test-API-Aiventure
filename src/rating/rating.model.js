@@ -39,7 +39,7 @@ const createPlaceRating = async (data, prismaClient = prisma) => {
   const { userId, placeId, rating, review } = data;
   return await prismaClient.placeRating.create({
     data: {
-      user_id: parseInt(userId, 10),
+      user_id: userId,
       place_id: parseInt(placeId, 10),
       rating: rating,
       review: review,
