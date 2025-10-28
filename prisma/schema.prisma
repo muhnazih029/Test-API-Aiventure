@@ -5,10 +5,12 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  // directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id           Int           @id @default(autoincrement())
+  // id           Int           @id @default(autoincrement())
+  id           String        @id @default(uuid())
   name         String
   email        String        @unique
   password     String
@@ -19,6 +21,7 @@ model User {
 
 model Places {
   id             Int           @id @default(autoincrement())
+  // id           String        @id @default(uuid())
   name           String
   description    String
   category       String
@@ -32,11 +35,12 @@ model Places {
 
 model PlaceRating {
   id        Int      @id @default(autoincrement())
-  user_id   Int
-  place_id  Int
-  rating    Float
-  review    String
-  createdAt DateTime @default(now())
+  // id           String        @id @default(uuid())
+  user_id      String
+  place_id     Int
+  rating      Float
+  review      String
+  createdAt   DateTime @default(now())
   
   place     Places   @relation(fields: [place_id], references: [id])
   user      User     @relation(fields: [user_id], references: [id])
