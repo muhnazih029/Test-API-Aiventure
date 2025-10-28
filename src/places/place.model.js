@@ -18,9 +18,9 @@ const getPlaceById = async (id, prismaClient = prisma) => {
     where: {
       id: parseInt(id),
     },
-    include: {
-      ratings: true,
-    },
+    // include: {
+    //   ratings: true,
+    // },
   });
 };
 

@@ -50,7 +50,7 @@ router.post('/place/:placeId', userAuthMiddleware, async (req, res) => {
       .status(201)
       .json({ message: 'Rating created successfully', rating: newRating });
   } catch (error) {
-    console.error('[CONTROLLER] Error caught:', error);
+    // console.error('[CONTROLLER] Error caught:', error);
 
     if (error.message === 'You have already rated this place.') {
       return res.status(409).json({ message: error.message });
