@@ -6,29 +6,20 @@ const {
   updatePlaceRating,
   deletePlaceRating,
 } = require('./rating.model');
-const { getPlaceById } = require('../places/place.model');
 
 const _updatePlaceRatingAverage = async (placeId, prismaClient = prisma) => {
-  const place = await getPlaceById(parseInt(placeId, 10), prismaClient);
-  if (!place) {
-    throw new Error('Place not found for updating rating average.');
-  }
+  const numericPlaceId = parseInt(placeId, 10);
 
-  const ratings = place.ratings;
+  const ratings = await prismaClient.placeRating.findMany({
+    where: { place_id: numericPlaceId },
+    select: { rating: true },
+  });
+
   const totalRating = ratings.reduce((sum, rating) => sum + rating.rating, 0);
   const average = ratings.length > 0 ? totalRating / ratings.length : 0;
-  // console.log(
-  //   `[SERVICE] Updating place ID ${placeId} average rating to ${average.toFixed(
-  //     2
-  //   )}`
-  // );
-  // console.log(
-  //   `[SERVICE] Total ratings: ${ratings.length}, Total score: ${totalRating}`
-  // );
-  // console.log(`[SERVICE] ratings array:`, ratings);
 
   await prismaClient.places.update({
-    where: { id: parseInt(placeId, 10) },
+    where: { id: numericPlaceId },
     data: { rating_average: parseFloat(average.toFixed(2)) },
   });
 };
