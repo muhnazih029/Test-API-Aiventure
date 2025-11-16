@@ -1,0 +1,50 @@
+services:
+  db:
+    image: supabase/postgres:15.8.1.085
+    container_name: express_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: muhnazih
+      POSTGRES_PASSWORD: muhammadnazih
+      POSTGRES_DB: db_aiventure
+    ports:
+      - '5433:5432'
+    # volumes:
+    #   - ./pgdata:/var/lib/postgresql/data
+    # opsional: skrip inisialisasi SQL otomatis
+    # - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '2.5'
+    #       memory: 1536M
+    #     reservations:
+    #       memory: 1024M
+    # stop_grace_period: 30s
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-express
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgres://muhnazih:muhammadnazih@db:5432/db_aiventure
+      JWT_SECRET: aiventure-AiVenturePasswordisGreat
+      PORT: 3000
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '2.5'
+    #       memory: 1536M
+    #     reservations:
+    #       memory: 1024M
+    # stop_grace_period: 30s
