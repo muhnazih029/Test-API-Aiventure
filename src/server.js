@@ -15,8 +15,6 @@ app.get('/', (req, res) => {
   res.json({ message: 'Welcome to the Ai-venture API' });
 });
 
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
+app.listen(port, '0.0.0.0');
 
 module.exports = app;

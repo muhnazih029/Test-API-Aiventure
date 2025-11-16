@@ -13,14 +13,11 @@ const createPlace = async (data) => {
   });
 };
 
-const getPlaceById = async (id, prismaClient = prisma) => {
-  return await prismaClient.places.findUnique({
+const getPlaceById = async (id) => {
+  return await prisma.places.findUnique({
     where: {
       id: parseInt(id),
     },
-    // include: {
-    //   ratings: true,
-    // },
   });
 };
 
